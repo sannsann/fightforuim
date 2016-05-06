@@ -7,16 +7,23 @@
 
 		<p class="message-desc"><%= @message.description %></p>
 
+		<div class="links btn-group">
+			<%= link_to "Back", root_path, class: "btn btn-default" %>
+
+			<% if user_signed_in? %>
+				<% if @message.user_id == current_user.id %>
+					<%= link_to "Edit", edit_message_path(@message), class: "btn btn-info" %>
+					<%= link_to "Delete", message_path(@message), method: :delete, data: { confirm: "You sure?" }, class: "btn btn-danger" %>
+					<% end %>
+			<% end %>
+		</div>
+		
 		<h3 class="comments-section-header">Comments:</h3>
 		<p><%= render @message.comments %></p>
 
 		<h3 class="reply-to-msg">Join Discussion:</h3>
 		<%= render 'comments/form' %>
 
-		<div class="links btn-group">
-			<%= link_to "Back", root_path, class: "btn btn-default" %>
-			<%= link_to "Edit", edit_message_path(@message), class: "btn btn-info" %>
-			<%= link_to "Delete", message_path(@message), method: :delete, data: { confirm: "You sure?" }, class: "btn btn-danger" %>
-		</div>
+
 	</div>
 </div>
